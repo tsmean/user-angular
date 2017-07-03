@@ -3,6 +3,7 @@ import {UserService} from '../user.service';
 
 import {NotifyService} from 'notify-angular';
 import {User} from '../user';
+import {UserStore} from '../user.store';
 
 @Component({
   selector: 'user-profile',
@@ -11,20 +12,21 @@ import {User} from '../user';
 })
 export class ProfileComponent {
 
-  user: User = {
-    email: undefined,
-    uid: undefined
-  };
-
-  password = '';
+  user: User = {};
 
   constructor(
     private userService: UserService,
     private notifyService: NotifyService,
-  ) { }
+    private userStore: UserStore
+  ) {
+    userStore.user.subscribe(user => {
+      this.user = user;
+    });
+  }
 
   doChange() {
-    this.userService.updateUser(this.user).subscribe(resp => {
+    this.userService.updateUser(this.user).subscribe((user: User) => {
+      this.userStore.setUser(user);
       this.notifyService.success('User updated');
     });
   }

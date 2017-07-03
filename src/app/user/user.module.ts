@@ -10,6 +10,7 @@ import {HttpModule} from '@angular/http';
 import {NotifyModule} from 'notify-angular';
 import { ProfileComponent } from './profile/profile.component';
 import {UserService} from './user.service';
+import {UserStore} from './user.store';
 
 @NgModule({
   imports: [
@@ -38,7 +39,8 @@ export class UserModule {
       providers: [
         { provide: ApiUrl, useValue: apiUrl },
         LoginService,
-        UserService
+        UserService,
+        UserStore
       ]
     };
   }

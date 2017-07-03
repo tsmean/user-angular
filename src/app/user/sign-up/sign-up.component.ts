@@ -5,6 +5,8 @@ import {Router} from '@angular/router';
 
 import 'rxjs/operator/catch';
 import {UserService} from '../user.service';
+import {User} from '../user';
+import {UserStore} from '../user.store';
 
 @Component({
   selector: 'user-sign-up',
@@ -13,10 +15,7 @@ import {UserService} from '../user.service';
 })
 export class SignUpComponent {
 
-  newUser = {
-    email: undefined,
-    uid: undefined
-  };
+  newUser: User = {};
 
   password = '';
 
@@ -24,13 +23,15 @@ export class SignUpComponent {
       private userService: UserService,
       private notifyService: NotifyService,
       private router: Router,
-      private loginService: LoginService
+      private loginService: LoginService,
+      private userStore: UserStore
   ) { }
 
   doSignUp() {
-    this.userService.createUser(this.newUser, this.password).subscribe(resp => {
+    this.userService.createUser(this.newUser, this.password).subscribe(user => {
       this.notifyService.success('User created');
-      this.loginService.logInAfterSignUp(this.newUser.email);
+      this.userStore.setUser(user);
+      this.loginService.logInAfterSignUp(user.email);
       this.router.navigate(['/dashboard']);
     });
   }

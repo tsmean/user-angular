@@ -6,6 +6,9 @@ import {Http} from '@angular/http';
 import {ApiUrl} from 'app/user/api-url';
 import {NotifyService} from 'notify-angular';
 import {ResourceService} from '@tsmean/resource/resource.service';
+import {LoginService} from './login.service';
+
+import 'rxjs/add/observable/of';
 
 
 @Injectable()
@@ -15,11 +18,12 @@ export class UserService {
     @Inject(ApiUrl) private apiUrl: string,
     private http: Http,
     private notifyService: NotifyService,
-    private resourceService: ResourceService
+    private resourceService: ResourceService,
+    private loginService: LoginService
   ) {}
 
   createUser(user: User, password: string): Observable<User> {
-    const $data = this.http.post(this.userApi, {
+    const $data = this.http.post(this.usersApi, {
       user: user,
       password: password
     }).map(resp => resp.json().data);
@@ -27,8 +31,23 @@ export class UserService {
   }
 
   getUser(): Observable<User> {
-    const $data = this.http.get(this.userApi).map(resp => resp.json().data);
-    return $data.catch(this.handleError);
+    if (this.loginService.loggedIn()) {
+
+      const fakeUser: User = {
+        uid: '1',
+        email: 'hans@gmail.com',
+        firstName: 'Hans',
+        lastName: 'Mueller'
+      };
+      const fakeObservable = Observable.of(fakeUser);
+
+      // const $data = this.http.get(WebUtils.urlJoin(this.apiUrl, 'user')).map(resp => resp.json().data);
+      const $data = fakeObservable;
+
+      return $data.catch(this.handleError);
+    } else {
+      throw new Error('cannot fetch user, since not logged in');
+    }
   }
 
   getUserById(id: string): Observable<User> {
@@ -44,7 +63,7 @@ export class UserService {
   }
 
 
-  private get userApi(): string {
+  private get usersApi(): string {
     return WebUtils.urlJoin(this.apiUrl, 'users');
   }
 

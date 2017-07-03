@@ -5,11 +5,18 @@ import {MdButtonModule, MdCardModule, MdInputModule} from '@angular/material';
 import {FormsModule} from '@angular/forms';
 import {UserService} from '../user.service';
 import {ApiUrl} from '../api-url';
-import {HttpModule} from '@angular/http';
+import {HttpModule, XHRBackend} from '@angular/http';
 
-import {NotifyModule} from 'notify-angular';
+import {NotifyModule, NotifyService} from 'notify-angular';
 import {ResourceModule} from '@tsmean/resource';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {UserStore} from '../user.store';
+import {LoginService} from '../login.service';
+import {RouterModule} from '@angular/router';
+import {APP_BASE_HREF} from '@angular/common';
+import {EmptyComponent} from '../../empty/empty.component';
+import {AuthGuardService} from '../auth-guard.service';
+import {MockBackend} from '@angular/http/testing';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
@@ -17,7 +24,16 @@ describe('ProfileComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProfileComponent ],
+      providers: [
+        {provide: APP_BASE_HREF, useValue : '/' },
+        NotifyService,
+        {provide: ApiUrl, useValue: 'bla'},
+        { provide: XHRBackend, useClass: MockBackend },
+        AuthGuardService,
+        LoginService,
+        UserService,
+        UserStore
+      ],
       imports: [
         FormsModule,
         BrowserAnimationsModule,
@@ -25,12 +41,15 @@ describe('ProfileComponent', () => {
         MdInputModule,
         MdButtonModule,
         HttpModule,
-        NotifyModule.forRoot(),
-        ResourceModule.forRoot('')
+        RouterModule.forRoot([
+          { path: '', component: EmptyComponent, canActivate: [AuthGuardService]},
+          { path: 'dashboard', component: EmptyComponent, canActivate: [AuthGuardService]}
+        ]),
+        ResourceModule.forRoot('bla')
       ],
-      providers: [
-        {provide: ApiUrl, useValue: ''},
-        UserService
+      declarations: [
+        EmptyComponent,
+        ProfileComponent
       ]
     })
     .compileComponents();

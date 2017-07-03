@@ -4,10 +4,14 @@
     <h1>
       Sign Up
     </h1>
-    
-    <md-input-container class="full-width">
-      <input mdInput placeholder="Your Name">
+  
+    <md-input-container class="half-width">
+      <input mdInput [(ngModel)]="newUser.firstName" placeholder="First Name">
     </md-input-container>
+    <md-input-container class="half-width">
+      <input mdInput [(ngModel)]="newUser.lastName" placeholder="Last Name">
+    </md-input-container>
+    
     <md-input-container class="full-width">
       <input mdInput [(ngModel)]="newUser.email" autocomplete="false" placeholder="Email">
     </md-input-container>

@@ -12,7 +12,7 @@ import {HttpModule, Response, ResponseOptions, XHRBackend} from '@angular/http';
 describe('AuthGuardService', () => {
   beforeEach(() => {
 
-    let router = {
+    const router = {
       navigate: jasmine.createSpy('navigate')
     };
 
