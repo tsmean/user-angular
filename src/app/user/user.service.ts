@@ -3,7 +3,7 @@ import {User} from './user';
 import {Observable} from 'rxjs/Observable';
 import {WebUtils} from '@tsmean/utils';
 import {Http} from '@angular/http';
-import {ApiUrl} from 'app/user/api-url';
+import {ApiUrl} from './api-url';
 import {NotifyService} from 'notify-angular';
 import {ResourceService} from '@tsmean/resource/resource.service';
 import {LoginService} from './login.service';
