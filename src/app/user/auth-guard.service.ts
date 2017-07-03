@@ -15,7 +15,7 @@ export class AuthGuardService implements CanActivate {
   }
 
   isAllowedOnState(url: string): boolean {
-    const forbiddenWhenLoggedOut = ['/dashboard'];
+    const forbiddenWhenLoggedOut = ['/dashboard', '/profile'];
     const forbiddenWhenLoggedIn = ['/login', '/signup', '/'];
     const isLoggedIn = this.userService.loggedIn();
 

@@ -10,7 +10,6 @@ import {LoginService} from './login.service';
 
 import 'rxjs/add/observable/of';
 
-
 @Injectable()
 export class UserService {
 
