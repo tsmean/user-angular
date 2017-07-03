@@ -157,6 +157,16 @@
     magic-string "^0.19.0"
     source-map "^0.5.6"
 
+"@tsmean/resource@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@tsmean/resource/-/resource-2.0.1.tgz#b7e847e6173645977a270e97c361fece8e816efe"
+  dependencies:
+    "@tsmean/utils" "^1.1.0"
+
+"@tsmean/utils@^1.1.0":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@tsmean/utils/-/utils-1.1.1.tgz#8ebb47d493ee583ab68c13139d0648db855d6976"
+
 "@types/jasmine@2.5.45":
   version "2.5.45"
   resolved "https://registry.yarnpkg.com/@types/jasmine/-/jasmine-2.5.45.tgz#58928a621d014ce6ab59c5a9c41071f7328b0ca9"

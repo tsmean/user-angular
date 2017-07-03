@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from '../user.service';
+import {LoginService} from '../login.service';
 import {NotifyService} from 'notify-angular';
-import {Cookies} from '@tsmean/cookies';
 import {Router} from '@angular/router';
+
+import 'rxjs/operator/catch';
+import {UserService} from '../user.service';
 
 @Component({
   selector: 'user-sign-up',
@@ -21,23 +23,15 @@ export class SignUpComponent {
   constructor(
       private userService: UserService,
       private notifyService: NotifyService,
-      private router: Router
+      private router: Router,
+      private loginService: LoginService
   ) { }
 
   doSignUp() {
-    this.userService.createUser(this.newUser, this.password).then(resp => {
+    this.userService.createUser(this.newUser, this.password).subscribe(resp => {
       this.notifyService.success('User created');
-      Cookies.setUserCookie(this.newUser.email);
+      this.loginService.logInAfterSignUp(this.newUser.email);
       this.router.navigate(['/dashboard']);
-    }, errorResp => {
-
-      if (errorResp.status === 404) {
-        // ONLY for demo purposes
-        this.userService.logIn(this.newUser.email, this.password);
-      } else {
-        this.notifyService.error(errorResp.statusText);
-      }
-
     });
   }
 

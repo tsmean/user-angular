@@ -1,6 +1,6 @@
 import {InjectionToken, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {UserService} from './user.service';
+import {LoginService} from './login.service';
 import {ApiUrl} from './api-url';
 import {SignUpComponent} from './sign-up/sign-up.component';
 import {LoginComponent} from './login/login.component';
@@ -8,7 +8,8 @@ import {MdButtonModule, MdInputModule} from '@angular/material';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {NotifyModule} from 'notify-angular';
-import { EmptyComponent } from './empty/empty.component';
+import { ProfileComponent } from './profile/profile.component';
+import {UserService} from './user.service';
 
 @NgModule({
   imports: [
@@ -22,11 +23,12 @@ import { EmptyComponent } from './empty/empty.component';
   declarations: [
     SignUpComponent,
     LoginComponent,
-    EmptyComponent
+    ProfileComponent,
   ],
   exports: [
     SignUpComponent,
-    LoginComponent
+    LoginComponent,
+    ProfileComponent
   ]
 })
 export class UserModule {
@@ -35,6 +37,7 @@ export class UserModule {
       ngModule: UserModule,
       providers: [
         { provide: ApiUrl, useValue: apiUrl },
+        LoginService,
         UserService
       ]
     };

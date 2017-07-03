@@ -13,6 +13,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { LandingComponent } from './landing/landing.component';
 
+import {ResourceModule} from '@tsmean/resource';
+
 const appRoutes: Routes = [
   { path: '', component: LandingComponent, canActivate: [AuthGuardService]},
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService]}
@@ -41,9 +43,11 @@ export class AppRoutingModule { }
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    ResourceModule.forRoot('http://demo.tsmean.com:4242/api/v1'),
     AppRoutingModule,
     NotifyModule.forRoot(),
-    UserModule.forRoot('http://demo.tsmean.com:4242/api/v1')
+    UserModule.forRoot('http://demo.tsmean.com:4242/api/v1'),
+
   ],
   providers: [
     AuthGuardService

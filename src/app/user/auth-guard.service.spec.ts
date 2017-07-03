@@ -3,7 +3,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { AuthGuardService } from './auth-guard.service';
 import {RouterModule, Router} from '@angular/router';
 import {APP_BASE_HREF} from '@angular/common';
-import {UserService} from './user.service';
+import {LoginService} from './login.service';
 import {ApiUrl} from './api-url';
 import {NotifyModule} from 'notify-angular';
 import {MockBackend, MockConnection} from '@angular/http/testing';
@@ -23,8 +23,8 @@ describe('AuthGuardService', () => {
         {provide: ApiUrl, useValue: 'bla'},
         { provide: XHRBackend, useClass: MockBackend },
         AuthGuardService,
-        UserService,
-        UserService,
+        LoginService,
+        LoginService,
         AuthGuardService
 
       ],
@@ -40,8 +40,8 @@ describe('AuthGuardService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('should handle states correctly', inject([AuthGuardService, UserService, XHRBackend], (
-    service: AuthGuardService, userService: UserService, mockBackend: MockBackend) => {
+  it('should handle states correctly', inject([AuthGuardService, LoginService, XHRBackend], (
+    service: AuthGuardService, userService: LoginService, mockBackend: MockBackend) => {
     userService.logOut();
     expect(service.isAllowedOnState('/dashboard')).toBeFalsy();
     mockBackend.connections.subscribe((connection: MockConnection) => {

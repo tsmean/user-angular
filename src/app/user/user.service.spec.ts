@@ -1,18 +1,19 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { UserService } from './user.service';
+import {LoginService} from './login.service';
+import {APP_BASE_HREF} from '@angular/common';
 import {ApiUrl} from './api-url';
-import {HttpModule, XHRBackend, Response, ResponseOptions} from '@angular/http';
-
+import {HttpModule, Response, ResponseOptions, XHRBackend} from '@angular/http';
 import {MockBackend, MockConnection} from '@angular/http/testing';
+import {AuthGuardService} from './auth-guard.service';
 import {NotifyService} from 'notify-angular';
 import {RouterModule} from '@angular/router';
-import {APP_BASE_HREF} from '@angular/common';
-import {AuthGuardService} from '../user/auth-guard.service';
-import {EmptyComponent} from './empty/empty.component';
+import {EmptyComponent} from '../empty/empty.component';
+import {User} from './user';
+import {ResourceModule} from '@tsmean/resource';
 
 describe('UserService', () => {
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
@@ -21,14 +22,16 @@ describe('UserService', () => {
         {provide: ApiUrl, useValue: 'bla'},
         { provide: XHRBackend, useClass: MockBackend },
         AuthGuardService,
-        UserService,
+        LoginService,
+        UserService
       ],
       imports: [
         HttpModule,
         RouterModule.forRoot([
           { path: '', component: EmptyComponent, canActivate: [AuthGuardService]},
           { path: 'dashboard', component: EmptyComponent, canActivate: [AuthGuardService]}
-        ])
+        ]),
+        ResourceModule.forRoot('bla')
       ],
       declarations: [
         EmptyComponent
@@ -36,34 +39,78 @@ describe('UserService', () => {
     });
   });
 
+
   it('should be created', inject([UserService], (service: UserService) => {
     expect(service).toBeTruthy();
   }));
 
-  it('should able to log out and check loggedIn status', inject([UserService], (service: UserService) => {
-   service.logOut();
-    expect(service.loggedIn()).toBeFalsy();
+  it('should be able to create a user', inject([UserService, XHRBackend], (
+    service: UserService, mockBackend: MockBackend) => {
+
+    mockBackend.connections.subscribe((connection: MockConnection) => {
+      connection.mockRespond(new Response(new ResponseOptions({
+        status: 200,
+        body: {
+          data: {
+            email: 'hans@gmail.com',
+            uid: '1'
+          }
+        }
+      })));
+    });
+
+    service.createUser('bla', 'blub').subscribe((user: User) => {
+      expect(user.uid).toEqual('1');
+      expect(user.email).toEqual('hans@gmail.com');
+    });
   }));
 
-  it('should be able to login without throwing an exception',
-    inject([UserService, XHRBackend],
-      (userService: UserService, mockBackend: MockBackend) => {
+  it('should be able to get user', inject([UserService, XHRBackend], (
+    service: UserService, mockBackend: MockBackend) => {
 
-        mockBackend.connections.subscribe((connection: MockConnection) => {
-          connection.mockRespond(new Response(new ResponseOptions({
-            status: 200,
-            body: {
-              email: 'hans@gmail.com'
-            }
-          })));
-        });
+    mockBackend.connections.subscribe((connection: MockConnection) => {
+      connection.mockRespond(new Response(new ResponseOptions({
+        status: 200,
+        body: {
+          data: {
+            email: 'hans@gmail.com',
+            uid: '1'
+          }
+        }
+      })));
+    });
 
-        /* this works because the mock backend is synchronous! */
-        userService.logIn('hans@gmail.com', '1234');
-        expect(userService.loggedIn()).toBeTruthy();
+    service.getUser().subscribe((user: User) => {
+      expect(user.uid).toEqual('1');
+      expect(user.email).toEqual('hans@gmail.com');
+    });
 
-      })
-  );
+  }));
+
+  it('should be able to update a user', inject([UserService, XHRBackend], (
+    service: UserService, mockBackend: MockBackend) => {
+
+    mockBackend.connections.subscribe((connection: MockConnection) => {
+      connection.mockRespond(new Response(new ResponseOptions({
+        status: 200,
+        body: {
+          data: {
+            email: 'britney@gmail.com',
+            uid: '1'
+          }
+        }
+      })));
+    });
+
+    service.updateUser({
+      email: 'britney@gmail.com',
+      uid: '1'
+    }).subscribe((user: User) => {
+      expect(user.uid).toEqual('1');
+      expect(user.email).toEqual('britney@gmail.com');
+    });
+
+  }));
 
 
 });

@@ -1,0 +1,26 @@
+<div style="max-width: 600px; margin: 0 auto;">
+  <md-card class="bottom-padded-card">
+    
+    <h1>
+      User Profile
+    </h1>
+    
+    <md-input-container class="half-width">
+      <input mdInput [(ngModel)]="user.firstName" placeholder="First Name">
+    </md-input-container>
+    <md-input-container class="half-width">
+      <input mdInput [(ngModel)]="user.firstName" placeholder="Last Name">
+    </md-input-container>
+    
+    <md-input-container class="full-width">
+      <input mdInput [(ngModel)]="user.email" autocomplete="false" placeholder="Email">
+    </md-input-container>
+    
+    <div class="clearfix">
+      <div class="float-right">
+        <button (click)="doChange()" color="primary" md-raised-button>Sign Up</button>
+      </div>
+    </div>
+  
+  </md-card>
+</div>
