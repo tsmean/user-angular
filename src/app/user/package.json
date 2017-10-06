@@ -1,6 +1,6 @@
 {
   "name": "@tsmean/user-angular",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "User module for the tsmean starter kit",
   "main": "index.js",
   "scripts": {
