@@ -1,29 +1,29 @@
 <div style="max-width: 600px; margin: 0 auto;">
-  <md-card class="bottom-padded-card">
+  <mat-card class="bottom-padded-card">
     
     <h1>
       Sign Up
     </h1>
   
-    <md-input-container class="half-width">
-      <input mdInput [(ngModel)]="newUser.firstName" placeholder="First Name">
-    </md-input-container>
-    <md-input-container class="half-width">
-      <input mdInput [(ngModel)]="newUser.lastName" placeholder="Last Name">
-    </md-input-container>
+    <mat-form-field class="half-width">
+      <input matInput [(ngModel)]="newUser.firstName" placeholder="First Name">
+    </mat-form-field>
+    <mat-form-field class="half-width">
+      <input matInput [(ngModel)]="newUser.lastName" placeholder="Last Name">
+    </mat-form-field>
     
-    <md-input-container class="full-width">
-      <input mdInput [(ngModel)]="newUser.email" autocomplete="false" placeholder="Email">
-    </md-input-container>
-    <md-input-container class="full-width">
-      <input mdInput [(ngModel)]="password" autocomplete="new-password" type="password" placeholder="Password">
-    </md-input-container>
+    <mat-form-field class="full-width">
+      <input matInput [(ngModel)]="newUser.email" autocomplete="false" placeholder="Email">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <input matInput [(ngModel)]="password" autocomplete="new-password" type="password" placeholder="Password">
+    </mat-form-field>
     
     <div class="clearfix">
       <div class="float-right">
-        <button (click)="doSignUp()" color="primary" md-raised-button>Sign Up</button>
+        <button (click)="doSignUp()" color="primary" mat-raised-button>Sign Up</button>
       </div>
     </div>
     
-  </md-card>
+  </mat-card>
 </div>

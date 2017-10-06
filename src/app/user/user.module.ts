@@ -4,7 +4,7 @@ import {LoginService} from './login.service';
 import {ApiUrl} from './api-url';
 import {SignUpComponent} from './sign-up/sign-up.component';
 import {LoginComponent} from './login/login.component';
-import {MdButtonModule, MdInputModule} from '@angular/material';
+import {MatButtonModule, MatInputModule} from '@angular/material';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {NotifyModule} from 'notify-angular';
@@ -16,8 +16,8 @@ import {UserStore} from './user.store';
   imports: [
     CommonModule,
     FormsModule,
-    MdInputModule,
-    MdButtonModule,
+    MatButtonModule,
+    MatInputModule,
     HttpModule,
     NotifyModule.forRoot()
   ],

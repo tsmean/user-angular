@@ -1,5 +1,5 @@
 <div style="max-width: 600px; margin: 0 auto;">
-  <md-card class="bottom-padded-card">
+  <mat-card class="bottom-padded-card">
     
     <h1>
       User Profile
@@ -9,22 +9,22 @@
       !!! Work in progress, currently displaying fake user !!!
     </p>
     
-    <md-input-container class="half-width">
-      <input mdInput [(ngModel)]="user.firstName" placeholder="First Name">
-    </md-input-container>
-    <md-input-container class="half-width">
-      <input mdInput [(ngModel)]="user.lastName" placeholder="Last Name">
-    </md-input-container>
+    <mat-form-field class="half-width">
+      <input matInput [(ngModel)]="user.firstName" placeholder="First Name">
+    </mat-form-field>
+    <mat-form-field class="half-width">
+      <input matInput [(ngModel)]="user.lastName" placeholder="Last Name">
+    </mat-form-field>
     
-    <md-input-container class="full-width">
-      <input mdInput [(ngModel)]="user.email" autocomplete="false" placeholder="Email">
-    </md-input-container>
+    <mat-form-field class="full-width">
+      <input matInput [(ngModel)]="user.email" autocomplete="false" placeholder="Email">
+    </mat-form-field>
     
     <div class="clearfix">
       <div class="float-right">
-        <button (click)="doChange()" color="primary" md-raised-button>Save Changes</button>
+        <button (click)="doChange()" color="primary" mat-raised-button>Save Changes</button>
       </div>
     </div>
   
-  </md-card>
+  </mat-card>
 </div>
